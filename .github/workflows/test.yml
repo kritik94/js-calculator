@@ -10,4 +10,4 @@ jobs:
       - name: Yarn install
         run: yarn
       - name: Run tests
-        uses: make test
+        run: make test
