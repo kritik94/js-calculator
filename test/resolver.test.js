@@ -1,17 +1,23 @@
-import { parse } from './parser.js'
+import { resolve } from '../src/resolver'
 
 test.each([
   [
-    ['1', '+', '2'],
+    {
+      type: 'number',
+      value: 1,
+    },
+    1
+  ],
+  [
     {
       type: 'operator',
       value: '+',
       left: {type: 'number', value: 1},
       right: {type: 'number', value: 2},
-    }
+    },
+    3
   ],
   [
-    ['1', '+', '2', '+', '3', '+', '4'],
     {
       type: 'operator',
       value: '+',
@@ -27,10 +33,10 @@ test.each([
         right: {type: 'number', value: 3},
       },
       right: {type: 'number', value: 4},
-    }
+    },
+    10
   ],
   [
-    ['1', '+', '2', '*', '3'],
     {
       type: 'operator',
       value: '+',
@@ -41,16 +47,16 @@ test.each([
         left: {type: 'number', value: 2},
         right: {type: 'number', value: 3},
       },
-    }
+    },
+    7
   ],
-])('%s should parsed to\n%o', (expression, expectedAst) => {
-  expect(parse(expression)).toStrictEqual(expectedAst)
+])('resolve ast:\n%o', (ast, expectedResult) => {
+  expect(resolve(ast)).toBe(expectedResult)
 })
 
 // parentheses
 test.each([
   [
-    ['(', '1', '+', '2', ')', '*', '3'],
     {
       type: 'operator',
       value: '*',
@@ -61,10 +67,10 @@ test.each([
         right: {type: 'number', value: 2},
       },
       right: {type: 'number', value: 3},
-    }
+    },
+    9
   ],
   [
-    ['1', '+', '(', '2', '*', '3', ')'],
     {
       type: 'operator',
       value: '+',
@@ -75,10 +81,10 @@ test.each([
         left: {type: 'number', value: 2},
         right: {type: 'number', value: 3},
       },
-    }
+    },
+    7
   ],
   [
-    ['(', '1', '*', '2', ')', '+', '3'],
     {
       type: 'operator',
       value: '+',
@@ -89,10 +95,10 @@ test.each([
         right: {type: 'number', value: 2},
       },
       right: {type: 'number', value: 3},
-    }
+    },
+    5
   ],
   [
-    ['1', '*', '(',  '2', '+', '3', ')'],
     {
       type: 'operator',
       value: '*',
@@ -103,15 +109,9 @@ test.each([
         left: {type: 'number', value: 2},
         right: {type: 'number', value: 3},
       },
-    }
+    },
+    5
   ],
-])('%s should parsed to\n%o', (expression, expectedAst) => {
-  expect(parse(expression)).toStrictEqual(expectedAst)
+])('resolve ast:\n%o', (ast, expectedResult) => {
+  expect(resolve(ast)).toBe(expectedResult)
 })
-
-// // errors
-// test.each([
-//   ['1 + 2 @ 3', 'parse is invalide'],
-// ])('%s should throw error %s', (expression, expectedError) => {
-//   expect(() => parse(expression)).toThrowError(expectedError)
-// })

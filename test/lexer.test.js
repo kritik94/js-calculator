@@ -1,4 +1,4 @@
-import { tokenize } from './lexer.js'
+import { tokenize } from '../src/lexer'
 
 test.each([
   ['1 + 2', ['1', '+', '2']],
