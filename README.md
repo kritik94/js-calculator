@@ -23,4 +23,4 @@ calculate('(2 + 2) * 3') // => 12
 calculate('((2 + 2) * 3) + (3 - 1) * 2') // => 16
 ```
 
-See more in [index.test.js](index.test.js)
+See more in [index.test.js](test/index.test.js)
