@@ -15,7 +15,7 @@ Just for fun.
 
 ## Examples
 
-```
+```javascript
 import { calculate } from './index.js'
 
 calculate('2 + 2 * 3') // => 8
